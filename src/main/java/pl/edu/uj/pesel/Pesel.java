@@ -22,6 +22,7 @@ public class Pesel {
     }
 
     int controlSum = 0; // TODO calculate controlSum
+    //something new
 
     final int lastNumber = Character.getNumericValue(pesel.pesel.charAt(PESEL_LEN - 1));
     int controlSumValidation = (controlSum + lastNumber) % 10;
