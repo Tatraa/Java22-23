@@ -10,6 +10,7 @@ public abstract class Message {
 
     String anonymizeMessageBody() {
         // TODO uzupełnij kod do anonimizacji:
+        // test
         return "abcd... (MD5)";
     }
 }
