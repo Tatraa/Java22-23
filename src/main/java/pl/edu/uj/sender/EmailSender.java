@@ -11,20 +11,17 @@ public class EmailSender implements Sender {
 
   @Override
   public void send(Message message, Recipient recipient)
-      throws SenderException {
+          throws SenderException, InterruptedException {
 
-    // TODO sprawdź czy message jest klasy EmailMessage
-    //  oraz recipient klasy EmailRecipient
-    //  Jeśli nie, throw new SenderException(...)
+    if((!(message instanceof EmailMessage)) || (!(recipient instanceof EmailRecipient)))
+      throw new SenderException("message albo recipent jest zlej klasy");
 
-    // TODO wywyołaj walidację wiadomości
-    // TODO wywolaj walidację odbiorcy
+    message.validateMessage();
+    recipient.validateRecipient();
 
     String bodyMD5 = message.anonymizeMessageBody();
     String anonymizedRecipientAddress = recipient.anonymize();
 
-    // TODO Dodaj wyjątek do sygnatury funkcji (Intelij sam podpowiada)
-    //  Co trzeba zmienić w interfejsie?
     sleep(5000); // sending
 
     /* Use System.out to graphically distinguish sending from logging */
