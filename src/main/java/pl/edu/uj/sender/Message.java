@@ -9,8 +9,6 @@ public abstract class Message {
     abstract void validateMessage() throws SenderException;
 
     String anonymizeMessageBody() {
-        // TODO uzupełnij kod do anonimizacji:
-        // test
-        return "abcd... (MD5)";
+        return org.apache.commons.codec.digest.DigestUtils.md5Hex(getMessageBody());
     }
 }

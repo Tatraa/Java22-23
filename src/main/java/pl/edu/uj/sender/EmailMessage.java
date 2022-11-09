@@ -1,5 +1,7 @@
 package pl.edu.uj.sender;
 
+import com.mysql.cj.util.StringUtils;
+
 public class EmailMessage extends Message {
 
   private final String messageTitle;
@@ -20,9 +22,9 @@ public class EmailMessage extends Message {
     return messageBody;
   }
 
-  // TODO zaimplementuj validateMessage()
-  //  Sprawdź, czy messageTitle i messageBody
-  //  są poprawne, np. nie puste. Możesz użyć np StringUtils.isEmpty(...)
-  //  W przypadku błędu, rzuć wyjątkiem.
-
+  @Override
+  void validateMessage() throws SenderException {
+    if((StringUtils.isNullOrEmpty(messageTitle)) || (StringUtils.isNullOrEmpty(messageBody)))
+      throw new SenderException("stringi są puste!");
+  }
 }

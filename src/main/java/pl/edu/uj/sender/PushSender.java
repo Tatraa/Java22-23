@@ -4,12 +4,11 @@ public class PushSender implements Sender {
 
   @Override
   public void send(Message message, Recipient recipient) throws SenderException {
-    // TODO sprawdź czy message jest klasy PushMessage
-    //  oraz recipient klasy PushRecipient
-    //  Jeśli nie, throw new SenderException(...)
-
-    // TODO wywyołaj walidację wiadomości
-    // TODO wywolaj walidację odbiorcy
+    if((!(message instanceof PushMessage)) || (!(recipient instanceof PushRecipient))){
+      throw new SenderException("message albo recipent jest zlej klasy");
+    }
+    message.validateMessage();
+    recipient.validateRecipient();
 
     String bodyMD5 = message.anonymizeMessageBody();
     String anonymizedRecipientAddress = recipient.anonymize();
