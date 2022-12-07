@@ -7,4 +7,5 @@ public class Product {
     String name;
     Map<Integer,Integer> partsIdsNeededCount;
     intproducedCount=0;
+    //grgrrg
 }

@@ -6,4 +6,6 @@ import pl.edu.uj.factory.model.Product;
 
 public class FactoryHelper {
     List<Product> allProducts;
-    PartsCollection allParts;}
+    PartsCollection allParts;
+    //fefe
+}
