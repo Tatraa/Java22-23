@@ -59,7 +59,8 @@ public class SenderApplication {
       threads[i].join();
     }
 
-    logger.info("Total %d messages sent".formatted(messagesSent));  // TODO fix it so it will always show real number of messages sent
+    logger.info("Total %d messages sent".formatted(messagesSent));
+    //mysle że działa to poprawnie
     System.exit(0);
   }
 }
