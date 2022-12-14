@@ -25,8 +25,14 @@ public class EmailRecipient extends Recipient {
 
   @Override
   String anonymize() {
-    // TODO Uzupełnij kod do anonimizacji:
-    String anonymizedRecipientAddress = "***@TODO";
-    return anonymizedRecipientAddress;
+    String[] split = recipientAddress.split("@");
+    StringBuilder sb = new StringBuilder();
+
+    for(int i = 0; i < split[0].length(); i++) {
+      if(i < split[0].length())
+        sb.append("*");
+      else sb.append(split[0].charAt(i));
+    }
+    return sb + "@" + split[1];
   }
 }

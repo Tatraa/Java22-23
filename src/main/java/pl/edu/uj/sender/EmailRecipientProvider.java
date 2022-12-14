@@ -8,8 +8,19 @@ public class EmailRecipientProvider extends RecipientProvider {
 
     @Override
     public Recipient getNextRecipient() {
-        String[] recipients = {"jan.kowalski@wp.pl", "mmozo@gmail.com"};
-        int index = random.nextInt(recipients.length);
-        return new EmailRecipient(recipients[index]);
+        String alph = "ABCDEFGHIJKLMNOPRSTUWXYZ";
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        int letterInMail = 15;
+
+        for(int i = 0; i < letterInMail; i++) {
+            int index = random.nextInt(alph.length());
+
+            char randChar = alph.charAt(index);
+
+            sb.append(randChar);
+        }
+        String randEmail = sb.toString() + "@gmail.com";
+        return new EmailRecipient(randEmail);
     }
 }
