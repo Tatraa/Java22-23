@@ -21,11 +21,7 @@ public class Pesel {
       return false;
     }
 
-    int controlSum = 0;
-    byte[] numbers = {1, 3, 7, 9};
-    for(int i = 0; i < PESEL_LEN - 1; i++){
-      controlSum += Character.getNumericValue(pesel.pesel.charAt(i)) * numbers[i % 4];
-    }
+    int controlSum = 0; // TODO calculate controlSum
 
     final int lastNumber = Character.getNumericValue(pesel.pesel.charAt(PESEL_LEN - 1));
     int controlSumValidation = (controlSum + lastNumber) % 10;
