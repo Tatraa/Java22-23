@@ -3,11 +3,19 @@ package pl.edu.uj.sender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class SenderApplication {
 
   private static final int THREADS_COUNT = 4;
+
+  static final int nextMessage = 100;
   static int messagesSent = 0;
   private static final Logger logger = LoggerFactory.getLogger(SenderApplication.class);
+  private static java.lang.Runnable Runnable;
+
+  static ExecutorService threadPool = Executors.newFixedThreadPool(THREADS_COUNT);
 
   public static void main(String[] args) throws InterruptedException {
 
@@ -16,23 +24,28 @@ public class SenderApplication {
     RecipientProvider recipientProvider = new EmailRecipientProvider();
 
     Runnable sendEmails =
-        new Runnable() {
-          @Override
-          public void run() {
-            // TODO implement code which in a safe way gets message, recipient and sends it
-            Message message = messageProvider.getNextMessage();
-            Recipient recipient = recipientProvider.getNextRecipient();
+          Runnable; sendEmails = new Runnable() {
+            @Override
+            public void run() {
+              while (messagesSent != nextMessage) {
+                Message message = messageProvider.getNextMessage();
+                Recipient recipient = recipientProvider.getNextRecipient();
 
-            try {
-              emailSender.send(message, recipient);
-            } catch (SenderException e) {
-              throw new RuntimeException(e);
+                threadPool.submit(new Runnable() {
+                  @Override
+                  public void run() {
+                    try {
+                      emailSender.send(message, recipient);
+                      logger.info("Messege %s sent to %s".formatted(message, recipient));
+                      messagesSent++;
+                    } catch (SenderException e) {
+                      throw new RuntimeException(e);
+                    }
+                  }
+                });
+              }
             }
-
-            logger.info("Messege %s sent to %s".formatted(message, recipient));
-            messagesSent++;
-          }
-        };
+          };
 
     Thread[] threads = new Thread[THREADS_COUNT];
 
@@ -47,5 +60,6 @@ public class SenderApplication {
     }
 
     logger.info("Total %d messages sent".formatted(messagesSent));  // TODO fix it so it will always show real number of messages sent
+    System.exit(0);
   }
 }
