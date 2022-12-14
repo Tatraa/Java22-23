@@ -29,7 +29,7 @@ public class EmailRecipient extends Recipient {
     StringBuilder sb = new StringBuilder();
 
     for(int i = 0; i < split[0].length(); i++) {
-      if(i < split[0].length())
+      if(i < split[0].length() - 1)
         sb.append("*");
       else sb.append(split[0].charAt(i));
     }
