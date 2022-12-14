@@ -40,6 +40,8 @@ public class SenderApplication {
                       messagesSent++;
                     } catch (SenderException e) {
                       throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
+                      throw new RuntimeException(e);
                     }
                   }
                 });
