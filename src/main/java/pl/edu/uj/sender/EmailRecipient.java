@@ -1,11 +1,8 @@
 package pl.edu.uj.sender;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 public class EmailRecipient extends Recipient {
 
   private final String recipientAddress;
-  private static final Pattern EmailPattern = Pattern.compile("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", Pattern.CASE_INSENSITIVE);
 
 
   public EmailRecipient(String recipientAddress) {
@@ -16,23 +13,26 @@ public class EmailRecipient extends Recipient {
     return recipientAddress;
   }
 
+  // TODO zaimplementuj validateRecipient() do sprawdzania poprawności adresu email
+  //  (czyli np czy jest jednokrotny symbol @).
+  //  W przypadku błędu, rzuć wyjątkiem.
+
 
   @Override
   void validateRecipient() throws SenderException {
-    Matcher m = EmailPattern.matcher(recipientAddress);
-    if(!m.find()){
-      throw new SenderException("niepoprawny adres email!");
-    }
+
   }
 
   @Override
   String anonymize() {
-    int a = 0;
-    char[] arr = recipientAddress.toCharArray();
-    while (arr[a] != '@') {
-      arr[a] = '*';
-      a++;
+    String[] split = recipientAddress.split("@");
+    StringBuilder sb = new StringBuilder();
+
+    for(int i = 0; i < split[0].length(); i++) {
+      if(i < split[0].length() - 1)
+        sb.append("*");
+      else sb.append(split[0].charAt(i));
     }
-    return new String(arr);
+    return sb + "@" + split[1];
   }
 }
